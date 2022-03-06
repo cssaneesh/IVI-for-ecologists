@@ -2,27 +2,28 @@
 title: "IVI for ecologists"
 author: "Saneesh"
 date: "3/6/2022"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## IVI for ecologists
-
 What is IVI?
 The Importance Value Index (IVI) shows the complete or overall picture of ecological importance of the species in a community. Community structure study is made by studying frequency, density, abundance and basal cover of species.
-link: https://www.biologydiscussion.com/experiments/experiments-on-ecology-biology/56545
-Watch video here: https://youtu.be/KXRxF9PqqaA
+link: https://www.biologydiscussion.com/experiments/experiments-on-ecology-biology/56545  
+
+Watch a video tutorial here: https://youtu.be/KXRxF9PqqaA
 
 ```{r message=FALSE, echo=FALSE}
-knitr::include_graphics("ivi.png")
+knitr::include_graphics("ivi.png", dpi = 150)
 ```
 
 
 ```{r echo=FALSE, message=FALSE}
-knitr::include_graphics('plot.png')
+knitr::include_graphics('plot.png', dpi = 150)
 ```
 
 * Black rectangle is your study landscape and the red boxes are plots. 
@@ -92,28 +93,3 @@ select(Rank, Species, IVI) %>% # to select only specific columns
   slice(1:10) %>% # only the top ten will be shown
   gt() # gt() will give a table
 ```
-
-```{r}
-data %>% as.data.frame() %>% drop_na(species, girth_cm) %>% 
-  mutate(count= rep(1, each=nrow(.)), # to make count column
-         dbh= girth_cm/pi, # to convert gbh to dbh
-         ba= 0.7854*(dbh/100)^2) %>% # calculate basal area from dbh
-  importancevalue(site="site", species="species", count="count", basal="ba", factor="", level="" ) 
-
-%>% mutate(Rank = row_number()) %>% # ivi rank for species
- rename(Species = X, IVI= importance.value) %>%  # clean names
-select(Rank, Species, IVI) %>% # to select only specific columns
-  slice(1:10) %>% # only the top ten will be shown
-  gt() # gt() will give a table
-
-
-
-
-
-
-
-
-
-
-```
-
